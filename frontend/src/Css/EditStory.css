@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap');
+
+.Inclusive-editStory-page {
+  max-width: 1000px;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.editStory-form {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+}
+
+@media (max-width: 768px) {
+  .editStory-form {
+    width: 100%;
+  }
+}
+
+.editStory-form input#title {
+  width: 100%;
+  height: 55px;
+  font-size: 1.4rem;
+  padding-left: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-weight: 500;
+  font-family: 'Balsamiq Sans', cursive;
+}
+
+.ck-editor {
+  margin-bottom: 1rem !important;
+}
+
+.ck-editor__top {
+  border: 1px solid #ccc !important;
+  border-bottom: none !important;
+  padding: 0.6rem 1rem !important;
+}
+
+.ck-content {
+  border: 1px solid #ccc !important;
+}
+
+.ck-toolbar__items,
+.ck-toolbar div {
+  border: none !important;
+}
+
+.ck-editor__editable {
+  height: 250px;
+  padding: 1rem !important;
+  font-size: 1rem;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+}
+
+.ck-editor__editable:focus {
+  box-shadow: none !important;
+}
+
+.StoryImageField {
+  width: 100%;
+  height: 240px;
+  border: 2px dashed #bbb;
+  background-color: #f9f9f9;
+  margin-top: 1.5rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: border 0.3s ease;
+}
+
+.StoryImageField:hover {
+  border-color: #666;
+}
+
+.StoryImageField svg {
+  font-size: 1.8rem;
+  color: #777;
+}
+
+.StoryImageField .txt {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+  max-width: 90%;
+}
+
+.StoryImageField input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.editStory-btn,
+.dis-btn {
+  margin-top: 2rem;
+  padding: 0.9rem;
+  width: 100%;
+  background-color: #0063a5;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.editStory-btn:hover {
+  background-color: #004b82;
+}
+
+.dis-btn {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.error_msg,
+.success_msg {
+  width: 90%;
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.error_msg {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.success_msg {
+  background-color: #27ae60;
+  color: #fff3e0;
+}
+
+.success_msg a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.currentlyImage {
+  width: 100%;
+  height: 280px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.currentlyImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.currentlyImage .absolute {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  opacity: 0.6;
+  font-family: 'Mukta', sans-serif;
+  z-index: 52;
+}

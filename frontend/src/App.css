@@ -1,0 +1,60 @@
+@font-face {
+    font-family: "Light"; /*Can be any text*/
+    src: local("aesthetic"), url("./fonts/logo.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Arnold"; /*Can be any text*/
+    src: local("Arnold"), url("./fonts/Arnold.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "betterfly"; /*Can be any text*/
+    src: local("betterfly"), url("./fonts/betterfly.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Brothabric"; /*Can be any text*/
+    src: local("Brothabric"), url("./fonts/Brothabric.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Gaqire"; /*Can be any text*/
+    src: local("Gaqire"), url("./fonts/Gaqire.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Helight"; /*Can be any text*/
+    src: local("Helight"), url("./fonts/Helight.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Lobster"; /*Can be any text*/
+    src: local("Lobster"), url("./fonts/Lobster.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Monalisa"; /*Can be any text*/
+    src: local("Monalisa"), url("./fonts/Monalisa.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Shackle"; /*Can be any text*/
+    src: local("Shackle"), url("./fonts/shackie.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Thiery"; /*Can be any text*/
+    src: local("Thiery"), url("./fonts/Thiery.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Trent"; /*Can be any text*/
+    src: local("trent"), url("./fonts/trent.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Walter"; /*Can be any text*/
+    src: local("Walter"), url("./fonts/Walter.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Vanity";
+    src: local("Vanity"), url("./fonts/Vanity.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Ginger"; /*Can be any text*/
+    src: local("Ginger"), url("./fonts/Ginger.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Hughs"; /*Can be any text*/
+    src: local("Hughs"), url("./fonts/Hughs.otf") format("truetype");
+  }

@@ -1,0 +1,163 @@
+.product-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+}
+
+.product-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.includes-text {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 1.5rem;
+}
+
+.product-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.product-image {
+  flex: 1;
+  min-width: 280px;
+  text-align: center;
+}
+
+.product-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.price {
+  font-size: 1.6rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+.stock-status {
+  color: #2e8b57;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin: 0.4rem 0;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.order-btn {
+  background-color: #d1f2d1;
+}
+
+.order-btn:hover {
+  background-color: #b8e6b8;
+}
+
+.pay-btn {
+  background-color: #bae1ff;
+}
+
+.pay-btn:hover {
+  background-color: #a0d4ff;
+}
+
+.wishlist-btn {
+  background-color: #f5f5f5;
+}
+
+.wishlist-btn:hover {
+  background-color: #ebebeb;
+}
+
+.stock-notify {
+  margin-top: 1.5rem;
+}
+
+.stock-notify input {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.notify-btn {
+  background-color: #ffe0b3;
+}
+
+.notify-btn:hover {
+  background-color: #ffd08c;
+}
+
+.product-description,
+.product-specs {
+  margin-bottom: 2.5rem;
+}
+
+.product-description h3,
+.product-specs h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.product-description p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.product-specs table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.product-specs td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-specs td:first-child {
+  font-weight: bold;
+  width: 40%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .product-main {
+    flex-direction: column;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+  }
+
+  .product-title {
+    font-size: 1.5rem;
+  }
+
+  .product-specs table {
+    font-size: 0.9rem;
+  }
+}

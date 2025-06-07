@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap&family=Hammersmith+One&family=Londrina+Solid:wght@900&display=swap');
+
+/* ─── BACKGROUND PLANETS ───────────────────────────────────────────────────────── */
+.bg-planet-svg {
+  position: absolute;
+  top: 250px;
+  right: -205px;
+  z-index: -5;
+  width: 450px;
+}
+
+.bg-planet2-svg {
+  position: absolute;
+  bottom: -125px;
+  left: -180px;
+  z-index: -5;
+  width: 450px;
+  opacity: 0.8;
+}
+
+.bg-planet3-svg {
+  position: absolute;
+  top: -65px;
+  left: -170px;
+  z-index: -5;
+  width: 450px;
+  opacity: 0.8;
+}
+
+/* ─── BODY ──────────────────────────────────────────────────────────────────────── */
+body {
+  background-color: #f0f0f0;
+  font-family: 'Hammersmith One', sans-serif;
+  margin-top: 30px; /* only once; removed the duplicate 80px */
+}
+
+/* ─── FILTER CONTAINER (wrap your <select> + <label> in a div with this class) ─── */
+.filter-container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto 1.5rem; /* bottom margin so cards sit just below */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Example:
+   <div class="filter-container">
+     <label for="categoryFilter">Filter by Category:</label>
+     <select id="categoryFilter">…</select>
+   </div>
+*/
+
+/* ─── STORY CARD WRAPPER ───────────────────────────────────────────────────────── */
+.story-card-wrapper {
+  position: relative;
+  min-height: auto;      /* let it expand/shrink based on actual card count */
+  width: 100%;           /* full width of parent */
+  max-width: 1050px;     /* same maximum as before */
+  margin: 0 auto;        /* center horizontally */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* ─── INDIVIDUAL STORY CARD ────────────────────────────────────────────────────── */
+.story-card {
+  width: 30%;
+  position: relative;
+  height: 460px;
+  border-radius: 6px;
+  margin: 2rem 1rem;
+  border: 1px solid rgba(121, 118, 118, 0.3);
+  box-shadow: 0 0 10px 5px rgba(88, 88, 88, 0.1);
+  background-color: white;
+  transition: 350ms ease all;
+}
+
+.story-card:hover {
+  transform: scale(1.1);
+}
+
+.story-card a.story-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.story-card img.story-image {
+  width: 100%;
+  height: 275px;
+  border-radius: 6px 6px 0 0;
+  object-fit: cover;
+}
+
+.story-card .story-content-wrapper {
+  padding: 14px;
+}
+
+.story-card h5.story-title {
+  font-size: 1.4rem;
+  line-height: 30px;
+  height: 87px;
+  letter-spacing: 0.6px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+  word-wrap: break-word;
+  font-family: 'Hammersmith One', sans-serif;
+  font-family: 'Londrina Solid', cursive;
+}
+
+.story-card .story-text {
+  height: 25px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.story-card .story-text,
+.story-card .story-text * {
+  color: rgb(92, 92, 92);
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.story-card .story-createdAt {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(48, 47, 47);
+}
+
+.get-me-now-button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.get-me-now-button:hover {
+  background-color: #0056b3;
+}
+
+.story-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* ─── MEDIA QUERIES ────────────────────────────────────────────────────────────── */
+@media only screen and (max-width: 1050px) {
+  .story-card-wrapper {
+    justify-content: space-evenly;
+  }
+  .story-card {
+    width: 45%;
+  }
+  .bg-planet3-svg,
+  .bg-planet-svg,
+  .bg-planet2-svg {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 674px) {
+  .story-card {
+    width: 380px;
+  }
+}
