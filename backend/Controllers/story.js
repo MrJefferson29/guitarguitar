@@ -1,6 +1,6 @@
 // controllers/story.js
 const asyncErrorWrapper = require("express-async-handler");
-const Story = require("../models/Story");
+const Story = require("../Models/story");
 const deleteImageFile = require("../Helpers/Libraries/deleteImageFile");
 const { searchHelper, paginateHelper } = require("../Helpers/query/queryHelpers");
 const cloudinary = require("cloudinary").v2;
