@@ -13,7 +13,7 @@ const ForgotPasswordScreen = () => {
 
     try {
       const { data } = await axios.post(
-        "https://sparko.onrender.com/auth/forgotpassword",
+        "https://guitarguitar.onrender.com/auth/forgotpassword",
         { email }
       );
 

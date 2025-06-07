@@ -35,7 +35,7 @@ const EditStory = () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/story/editStory/${slug}`,
+          `https://guitarguitar.onrender.com/story/editStory/${slug}`,
           config
         );
         const info = data.data;
@@ -90,7 +90,7 @@ const EditStory = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/story/${slug}/edit`,
+        `https://guitarguitar.onrender.com/story/${slug}/edit`,
         formdata,
         {
           ...config,

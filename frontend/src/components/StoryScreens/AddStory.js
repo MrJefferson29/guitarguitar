@@ -57,7 +57,7 @@ const AddStory = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/story/addstory",
+        "https://guitarguitar.onrender.com/story/addstory",
         formdata,
         {
           ...config,

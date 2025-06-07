@@ -21,7 +21,7 @@ const PrivateRoute =( ) => {
             },
         };
         try {
-            const { data } = await axios.get("http://localhost:5000/auth/private", config); 
+            const { data } = await axios.get("https://guitarguitar.onrender.com/auth/private", config); 
 
             setAuth(true)
             setActiveUser(data.user)

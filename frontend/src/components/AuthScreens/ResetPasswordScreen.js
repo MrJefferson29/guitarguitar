@@ -25,7 +25,7 @@ const ResetPasswordScreen = () => {
 
     try {
       const { data } = await axios.put(
-        `https://sparko.onrender.com/auth/resetpassword?resetPasswordToken=${token}`,
+        `https://guitarguitar.onrender.com/auth/resetpassword?resetPasswordToken=${token}`,
         {
           password,
         }

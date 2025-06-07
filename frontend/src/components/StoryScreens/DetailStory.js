@@ -60,7 +60,7 @@ const DetailStory = () => {
 
       // 1) fetch logged-in user (if any)
       try {
-        const { data } = await axios.get("http://localhost:5000/auth/private", {
+        const { data } = await axios.get("https://guitarguitar.onrender.com/auth/private", {
           headers: {
             "Content-Type": "application/json",
             authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -75,7 +75,7 @@ const DetailStory = () => {
       // 2) fetch story by slug
       try {
         const { data } = await axios.post(
-          `http://localhost:5000/story/${slug}`,
+          `https://guitarguitar.onrender.com/story/${slug}`,
           { activeUser: currentUser }
         );
 
@@ -111,7 +111,7 @@ const DetailStory = () => {
 
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/story/getAllStories`
+          `https://guitarguitar.onrender.com/story/getAllStories`
         );
         const allStories = data.data;
         const filtered = allStories.filter(
@@ -133,7 +133,7 @@ const DetailStory = () => {
 
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/story/${slug}/like`,
+        `https://guitarguitar.onrender.com/story/${slug}/like`,
         { activeUser },
         {
           headers: {
@@ -156,7 +156,7 @@ const DetailStory = () => {
   const handleDelete = async () => {
     if (window.confirm("Do you want to delete this post")) {
       try {
-        await axios.delete(`http://localhost:5000/story/${slug}/delete`, {
+        await axios.delete(`https://guitarguitar.onrender.com/story/${slug}/delete`, {
           headers: {
             "Content-Type": "application/json",
             authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -173,7 +173,7 @@ const DetailStory = () => {
   const addStoryToReadList = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/user/${slug}/addStoryToReadList`,
+        `https://guitarguitar.onrender.com/user/${slug}/addStoryToReadList`,
         { activeUser },
         {
           headers: {

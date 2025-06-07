@@ -10,7 +10,7 @@ const {
   editStoryPage,
 } = require("../Controllers/story");
 const { getAccessToRoute } = require("../Middlewares/Authorization/auth");
-const { checkStoryExist, checkUserAndStoryExist } = require("../middlewares/database/databaseErrorhandler");
+const { checkStoryExist, checkUserAndStoryExist } = require("../Middlewares/database/databaseErrorhandler");
 const multer = require("multer");
 const router = express.Router();
 
