@@ -238,7 +238,7 @@ const DetailStory = () => {
             </div>
 
             <div className="product-info">
-              <h2 className="price">£ {story.price}</h2>
+              <h2 className="price">$ {story.price}</h2>
               <p className="stock-status">Available to Order</p>
 
               <div className="payment-buttons">
@@ -250,7 +250,7 @@ const DetailStory = () => {
                 </button>
 
                 <button className="btn pay-btn" onClick={handleEmailClick}>
-                  Pay £ {story.price}
+                  Pay $ {story.price}
                 </button>
               </div>
 

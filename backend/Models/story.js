@@ -30,8 +30,8 @@ const StorySchema = new mongoose.Schema(
       type: [String],
       default: [],
       validate: {
-        validator: (arr) => arr.length <= 5,
-        message: "A story can have up to 5 images only.",
+        validator: (arr) => arr.length <= 8,
+        message: "A story can have up to 8 images only.",
       },
     },
     readtime: {

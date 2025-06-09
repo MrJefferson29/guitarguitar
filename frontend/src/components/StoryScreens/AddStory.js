@@ -38,8 +38,8 @@ const AddStory = () => {
       setTimeout(() => setError(""), 5000);
       return;
     }
-    if (files.length > 5) {
-      setError("You can upload a maximum of 5 images.");
+    if (files.length > 8) {
+      setError("You can upload a maximum of 8 images.");
       setTimeout(() => setError(""), 5000);
       return;
     }
@@ -177,7 +177,7 @@ const AddStory = () => {
           <div className="txt">
             {files.length > 0
               ? files.map((f) => f.name).join(", ")
-              : "Click here (or drag) to include up to 5 images."}
+              : "Click here (or drag) to include up to 8 images."}
           </div>
           <input
             name="images"

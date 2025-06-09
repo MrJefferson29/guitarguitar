@@ -27,10 +27,10 @@ const addStory = asyncErrorWrapper(async (req, res, next) => {
   }
 
   // If user tries to upload more than 5 files:
-  if (req.files.length > 5) {
+  if (req.files.length > 8) {
     return res
       .status(400)
-      .json({ error: "You can upload a maximum of 5 images per story." });
+      .json({ error: "You can upload a maximum of 8 images per story." });
   }
 
   // Compute readtime from word count:
@@ -186,10 +186,10 @@ const editStory = asyncErrorWrapper(async (req, res, next) => {
   // If client sent new files (req.files), upload them and append
   if (req.files && req.files.length > 0) {
     // Ensure total won't exceed 5:
-    if (updatedImageUrls.length + req.files.length > 5) {
+    if (updatedImageUrls.length + req.files.length > 8) {
       return res
         .status(400)
-        .json({ error: "A story can have up to 5 images only." });
+        .json({ error: "A story can have up to 8 images only." });
     }
 
     const uploadPromises = req.files.map((file) =>

@@ -23,7 +23,7 @@ const upload = multer({ storage });
 // - must be authenticated
 router.post(
   "/addstory",
-  [getAccessToRoute, upload.array("my_files", 5)],
+  [getAccessToRoute, upload.array("my_files", 8)],
   addStory
 );
 
@@ -47,7 +47,7 @@ router.get(
 // - update story fields + up to 5 images
 router.put(
   "/:slug/edit",
-  [getAccessToRoute, checkStoryExist, checkUserAndStoryExist, upload.array("my_files", 5)],
+  [getAccessToRoute, checkStoryExist, checkUserAndStoryExist, upload.array("my_files", 8)],
   editStory
 );
 
