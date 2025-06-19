@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsBookmarkPlus, BsThreeDots, BsBookmarkFill } from "react-icons/bs";
-import { SiApplepay, SiGooglepay } from "react-icons/si";
+import { SiAdonisjs, SiApplepay, SiCashapp, SiGooglepay, SiVenmo } from "react-icons/si";
 
 const sliderSettings = {
   dots: true,
@@ -247,6 +247,9 @@ const DetailStory = () => {
                   <FaPaypal title="PayPal" />
                   <SiApplepay title="Apple Pay" />
                   <SiGooglepay title="Google Pay" />
+                  <SiCashapp title="Cash App" />
+                  <SiVenmo title="Venmo" />
+                  {/* <SiAdonisjs title="AdonisJS" /> */}
                 </button>
 
                 <button className="btn pay-btn" onClick={handleEmailClick}>
@@ -311,6 +314,7 @@ export default DetailStory;
 const PageWrapper = styled.div`
   background-color: #fdfdfd;
   min-height: 100vh;
+  overflow-x: hidden;
 
   .carousel-wrapper {
     position: relative;
@@ -360,7 +364,11 @@ const PageWrapper = styled.div`
 
   .product-info {
     flex: 1;
-    min-width: 300px;
+    min-width: 110%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .price {
@@ -449,9 +457,10 @@ const PageWrapper = styled.div`
 
   .top_story_transactions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1rem;
     padding: 1rem 2rem 0;
+    margin-top: 60px;
   }
 
   .editStoryLink,
