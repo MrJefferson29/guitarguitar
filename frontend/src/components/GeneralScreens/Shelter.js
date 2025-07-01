@@ -1,131 +1,104 @@
-import React, { useState, useEffect } from "react";
+// src/components/Shelter.js
+import React, { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";                // ← Import styled-components
+import styled from "styled-components";
 import SkeletonStory from "../Skeletons/SkeletonStory";
 import CardStory from "../StoryScreens/CardStory";
 import NoStories from "../StoryScreens/NoStories";
 import Pagination from "./Pagination";
-import "../../Css/Home.css";
 
-const Shelter = () => {
-  const search = useLocation().search;
-  const searchKey = new URLSearchParams(search).get("search");
+export default function Shelter() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const searchKey = params.get("search") || "";
+  const categoryKey = params.get("category") || "All";
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(parseInt(params.get("page"), 10) || 1);
   const [pages, setPages] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState(categoryKey);
 
   useEffect(() => {
-    const getStories = async () => {
+    const fetchStories = async () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `https://guitarguitar.onrender.com/story/getAllStories?search=${searchKey || ""}&page=${page}`
+          `https://guitarguitar.onrender.com/story/getAllStories?search=${encodeURIComponent(searchKey)}${selectedCategory !== "All" ? `&category=${encodeURIComponent(selectedCategory)}` : ''}&page=${page}`
         );
-
-        if (searchKey) {
-          navigate({
-            pathname: "/store",
-            search: `?search=${searchKey}${page > 1 ? `&page=${page}` : ""}`,
-          });
-        } else {
-          navigate({
-            pathname: "/store",
-            search: `${page > 1 ? `page=${page}` : ""}`,
-          });
-        }
-
         setStories(data.data);
         setPages(data.pages);
-        setLoading(false);
       } catch (error) {
-        setLoading(true);
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    getStories();
-  }, [searchKey, page, navigate]);
+    fetchStories();
+  }, [searchKey, selectedCategory, page]);
 
+  // Update URL when category or page changes
   useEffect(() => {
-    setPage(1);
-    setSelectedCategory("All");
-  }, [searchKey]);
+    const queryParts = [];
+    if (searchKey) queryParts.push(`search=${encodeURIComponent(searchKey)}`);
+    if (selectedCategory && selectedCategory !== "All") queryParts.push(`category=${encodeURIComponent(selectedCategory)}`);
+    if (page > 1) queryParts.push(`page=${page}`);
+    const queryString = queryParts.length ? `?${queryParts.join("&")}` : "";
+    navigate({ pathname: "/store", search: queryString }, { replace: true });
+  }, [searchKey, selectedCategory, page, navigate]);
 
-  // Build a unique list of categories from the fetched stories
-  const categories = React.useMemo(() => {
+  const categories = useMemo(() => {
     const cats = new Set();
-    stories.forEach((story) => {
-      if (story.category) cats.add(story.category);
-    });
+    stories.forEach(s => s.category && cats.add(s.category));
     return ["All", ...Array.from(cats)];
   }, [stories]);
 
-  // Filter stories based on the selected category
-  const filteredStories =
-    selectedCategory === "All"
-      ? stories
-      : stories.filter((story) => story.category === selectedCategory);
+  const filteredStories = selectedCategory === "All"
+    ? stories
+    : stories.filter(s => s.category === selectedCategory);
 
   return (
     <SectionWrapper>
       {loading ? (
         <div className="skeleton_emp">
-          {[...Array(6)].map(() => (
-            <SkeletonStory key={uuidv4()} />
-          ))}
+          {[...Array(6)].map(() => <SkeletonStory key={uuidv4()} />)}
         </div>
       ) : (
-        <div>
-          {/* ─── CATEGORY FILTER DROPDOWN ───────────────────────────────────── */}
+        <>
           <FilterContainer>
             <label htmlFor="categoryFilter">Filter by Category:</label>
             <select
               id="categoryFilter"
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={e => { setSelectedCategory(e.target.value); setPage(1); }}
             >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
               ))}
             </select>
           </FilterContainer>
 
-          {/* ─── STORY CARDS GRID ───────────────────────────────────────────── */}
           <div className="story-card-wrapper">
-            {filteredStories.length !== 0 ? (
-              filteredStories.map((story) => (
-                <CardStory key={uuidv4()} story={story} />
-              ))
-            ) : (
-              <NoStories />
-            )}
-
-            {/* Background SVGs (unchanged) */}
+            {filteredStories.length
+              ? filteredStories.map(story => <CardStory key={uuidv4()} story={story} />)
+              : <NoStories />
+            }
             <img className="bg-planet-svg" src="planet.svg" alt="planet" />
             <img className="bg-planet2-svg" src="planet2.svg" alt="planet" />
             <img className="bg-planet3-svg" src="planet3.svg" alt="planet" />
           </div>
 
-          {/* ─── PAGINATION CONTROL ──────────────────────────────────────────── */}
           <Pagination page={page} pages={pages} changePage={setPage} />
-        </div>
+        </>
       )}
-      <br />
     </SectionWrapper>
   );
-};
+}
 
-export default Shelter;
-
-/* ─── Styled Components ───────────────────────────────────────────────────────── */
 const SectionWrapper = styled.div`
-  /* You can add padding/margin around the entire section if needed */
   padding: 1rem;
 `;
 
@@ -138,38 +111,24 @@ const FilterContainer = styled.div`
   label {
     font-size: 1rem;
     font-weight: 500;
-    color: #333333;
+    color: #333;
     margin-right: 0.75rem;
   }
 
   select {
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     border-radius: 6px;
-    background-color: #ffffff;
-    color: #333333;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    min-width: 180px;
+    background-color: #fff;
+    appearance: none;
     cursor: pointer;
 
-    /* Remove default arrow on some browsers (optional) */
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8L0.803848 0.5L11.1962 0.5L6 8Z' fill='%23333'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 12px 8px;
-
-    &:hover {
-      border-color: #999999;
-    }
-
+    &:hover { border-color: #999; }
     &:focus {
       outline: none;
       border-color: #6666ff;
-      box-shadow: 0 0 0 2px rgba(102, 102, 255, 0.2);
+      box-shadow: 0 0 0 2px rgba(102,102,255,0.2);
     }
   }
 `;
