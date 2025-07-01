@@ -90,7 +90,6 @@ const Footer = () => {
           <LinkList>
             {[
               "Contact us",
-              "Delivery Information",
               "Returns Policy",
               "Track my Order",
               "Retrieve Store Quote",
