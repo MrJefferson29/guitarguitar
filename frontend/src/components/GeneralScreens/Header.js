@@ -1,68 +1,78 @@
-import React, { useEffect, useState , useContext} from "react";
+// src/components/Header.js
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../Assets/logo.png';
 import Navbar from './Navbar';
 import { AuthContext } from "../../Context/AuthContext";
 
+const categories = [
+  "All",
+  "Electric",
+  "Acoustic",
+  "Bass",
+  "Amps",
+  "Pedals",
+  "Studio",
+  "PA",
+  "Mics",
+  "Keys & Pianos",
+  "Drums"
+];
+
 export default function Header() {
   const [isMobile, setIsMobile] = useState(false);
-  const bool = localStorage.getItem("authToken") ? true : false
-  const [auth, setAuth] = useState(bool)
-  const { activeUser } = useContext(AuthContext)
-  const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
+  const bool = localStorage.getItem("authToken") ? true : false;
+  const [auth, setAuth] = useState(bool);
+  const { activeUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth < 1024); // Set true for mobile screens
+    setIsMobile(window.innerWidth < 1024);
   };
 
   useEffect(() => {
-    handleResize(); // Check initial size
-    window.addEventListener("resize", handleResize); // Update on resize
-
-    return () => window.removeEventListener("resize", handleResize); // Cleanup
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   useEffect(() => {
+    setAuth(bool);
+    const timer = setTimeout(() => setLoading(false), 1600);
+    return () => clearTimeout(timer);
+  }, [bool]);
 
-    setAuth(bool)
-    setTimeout(() => {
-        setLoading(false)
-    }, 1600)
-
-}, [bool])
+  const handleCategoryNav = (cat) => {
+    const query = cat === "All" ? '' : `?category=${encodeURIComponent(cat)}`;
+    navigate(`/store${query}`);
+  };
 
   return (
     <Styles>
       <div className="container">
         <Link to='/' className="logo-link">
           <img src={logo} alt="Logo" className="logo-image" />
-          <div className="logo-text">
-          </div>
         </Link>
-        {!isMobile && ( // Render links only on larger screens
+
+        {!isMobile && (
           <div className="icon-wrapper">
             <Link className="link" to="/">Home</Link>
-            {auth?
-            <Link className="link" to="/addStory">Post Guitar</Link>
-            : <></>}
-            <Link className="link" to="/store">Our Store</Link>
-            <Link className="link" to="/store">Electric</Link>
-            <Link className="link" to="/store">Acoustic</Link>
-            <Link className="link" to="/store">Bass</Link>
-            <Link className="link" to="/store">Amps</Link>
-            <Link className="link" to="/store">Pedals</Link>
-            <Link className="link" to="/store">Studio</Link>
-            <Link className="link" to="/store">PA</Link>
-            <Link className="link" to="/store">Mics</Link>
-            <Link className="link" to="/store">Keys & Pianos</Link>
-            <Link className="link" to="/store">Drums</Link>
-
+            {auth && <Link className="link" to="/addStory">Post Guitar</Link>}
+            {categories.map(cat => (
+              <button
+                key={cat}
+                className="link category-button"
+                onClick={() => handleCategoryNav(cat)}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         )}
-        {isMobile && <Navbar />} {/* Render Navbar only on mobile screens */}
+
+        {isMobile && <Navbar />}
       </div>
     </Styles>
   );
@@ -84,12 +94,11 @@ const Styles = styled.div`
 
   .container {
     display: flex;
-    justify-content: space-between; // Keep logo on the left and navbar on the right
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
-    position: relative;
-    padding: 0 10px; // Add some padding for better spacing
+    padding: 0 10px;
   }
 
   .logo-link {
@@ -98,70 +107,42 @@ const Styles = styled.div`
     height: 100%;
     text-decoration: none;
     color: #333;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: transform 0.3s ease;
   }
 
   .logo-image {
     height: 95%;
     width: auto;
     object-fit: cover;
-    margin-right: 10px;
-    transition: transform 0.3s ease;
-  }
-
-  .logo-link:hover .logo-image {
-    transform: scale(1.05);
-  }
-
-  .logo-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .logo-text span {
-    font-size: 0.75rem;
-    color: #555;
   }
 
   .icon-wrapper {
     display: flex;
-    gap: 30px; /* Increased spacing for a more professional look */
+    gap: 20px;
     align-items: center;
-
-    @media (max-width: 768px) {
-      display: none; /* Hide on mobile screens */
-    }
   }
 
-  .icon-wrapper a {
-    font-size: 1rem; /* Adjust font size for better readability */
-    font-weight: 600; /* Slightly bolder text */
+  .link {
+    font-size: 1rem;
+    font-weight: 600;
     color: #333;
-    text-decoration: none; /* Remove underline */
-    transition: color 0.3s ease, transform 0.3s ease;
-    padding: 5px 10px; /* Add padding for a button-like effect */
-    border-radius: 5px; /* Rounded corners for links */
-    background-color: transparent; /* No background */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
   }
 
-  .icon-wrapper a:hover {
-    color: #ff9900; /* Change color on hover */
-    transform: scale(1.05); /* Slightly increase size on hover */
-    background-color: rgba(255, 153, 0, 0.1); /* Light background on hover */
+  .link:hover {
+    color: #ff9900;
+    background-color: rgba(255, 153, 0, 0.1);
+    transform: scale(1.05);
   }
 
-  .search, .user, .plus {
-    font-size: 22.5px;
-    transition: color 0.3s ease;
-  }
-
-  @media (max-width: 1024px) {
-    .navbar {
-      position: absolute; // Position the navbar absolutely
-      right: 0; // Align it to the right
-      top: 55px; // Position it below the header
-      width: 100%; // Ensure it takes full width
-    }
+  button.category-button {
+    background: transparent;
   }
 `;
+
