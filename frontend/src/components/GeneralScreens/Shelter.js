@@ -1,4 +1,3 @@
-// src/components/Shelter.js
 import React, { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +6,6 @@ import styled from "styled-components";
 import SkeletonStory from "../Skeletons/SkeletonStory";
 import CardStory from "../StoryScreens/CardStory";
 import NoStories from "../StoryScreens/NoStories";
-import Pagination from "./Pagination";
 
 export default function Shelter() {
   const location = useLocation();
@@ -15,10 +13,9 @@ export default function Shelter() {
   const params = new URLSearchParams(location.search);
   const searchKey = params.get("search") || "";
   const categoryKey = params.get("category") || "All";
+
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(parseInt(params.get("page"), 10) || 1);
-  const [pages, setPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(categoryKey);
 
   useEffect(() => {
@@ -26,10 +23,11 @@ export default function Shelter() {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `https://guitarguitar.onrender.com/story/getAllStories?search=${encodeURIComponent(searchKey)}${selectedCategory !== "All" ? `&category=${encodeURIComponent(selectedCategory)}` : ''}&page=${page}`
+          `https://guitarguitar.onrender.com/story/getAllStories?search=${encodeURIComponent(searchKey)}${
+            selectedCategory !== "All" ? `&category=${encodeURIComponent(selectedCategory)}` : ''
+          }`
         );
         setStories(data.data);
-        setPages(data.pages);
       } catch (error) {
         console.error(error);
       } finally {
@@ -38,17 +36,18 @@ export default function Shelter() {
     };
 
     fetchStories();
-  }, [searchKey, selectedCategory, page]);
+  }, [searchKey, selectedCategory]);
 
-  // Update URL when category or page changes
+  // Update URL when category changes
   useEffect(() => {
     const queryParts = [];
     if (searchKey) queryParts.push(`search=${encodeURIComponent(searchKey)}`);
-    if (selectedCategory && selectedCategory !== "All") queryParts.push(`category=${encodeURIComponent(selectedCategory)}`);
-    if (page > 1) queryParts.push(`page=${page}`);
+    if (selectedCategory && selectedCategory !== "All")
+      queryParts.push(`category=${encodeURIComponent(selectedCategory)}`);
+
     const queryString = queryParts.length ? `?${queryParts.join("&")}` : "";
     navigate({ pathname: "/store", search: queryString }, { replace: true });
-  }, [searchKey, selectedCategory, page, navigate]);
+  }, [searchKey, selectedCategory, navigate]);
 
   const categories = useMemo(() => {
     const cats = new Set();
@@ -56,9 +55,10 @@ export default function Shelter() {
     return ["All", ...Array.from(cats)];
   }, [stories]);
 
-  const filteredStories = selectedCategory === "All"
-    ? stories
-    : stories.filter(s => s.category === selectedCategory);
+  const filteredStories =
+    selectedCategory === "All"
+      ? stories
+      : stories.filter(s => s.category === selectedCategory);
 
   return (
     <SectionWrapper>
@@ -73,7 +73,7 @@ export default function Shelter() {
             <select
               id="categoryFilter"
               value={selectedCategory}
-              onChange={e => { setSelectedCategory(e.target.value); setPage(1); }}
+              onChange={e => setSelectedCategory(e.target.value)}
             >
               {categories.map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
@@ -83,15 +83,15 @@ export default function Shelter() {
 
           <div className="story-card-wrapper">
             {filteredStories.length
-              ? filteredStories.map(story => <CardStory key={uuidv4()} story={story} />)
+              ? filteredStories.map(story => (
+                  <CardStory key={uuidv4()} story={story} />
+                ))
               : <NoStories />
             }
             <img className="bg-planet-svg" src="planet.svg" alt="planet" />
             <img className="bg-planet2-svg" src="planet2.svg" alt="planet" />
             <img className="bg-planet3-svg" src="planet3.svg" alt="planet" />
           </div>
-
-          <Pagination page={page} pages={pages} changePage={setPage} />
         </>
       )}
     </SectionWrapper>
