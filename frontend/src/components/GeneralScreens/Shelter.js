@@ -1,3 +1,5 @@
+```javascript
+// src/components/Shelter.js
 import React, { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,6 +8,7 @@ import styled from "styled-components";
 import SkeletonStory from "../Skeletons/SkeletonStory";
 import CardStory from "../StoryScreens/CardStory";
 import NoStories from "../StoryScreens/NoStories";
+import Pagination from "./Pagination";
 
 export default function Shelter() {
   const location = useLocation();
@@ -16,6 +19,8 @@ export default function Shelter() {
 
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(parseInt(params.get("page"), 10) || 1);
+  const [pages, setPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(categoryKey);
 
   useEffect(() => {
@@ -23,11 +28,16 @@ export default function Shelter() {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `https://guitarguitar.onrender.com/story/getAllStories?search=${encodeURIComponent(searchKey)}${
-            selectedCategory !== "All" ? `&category=${encodeURIComponent(selectedCategory)}` : ''
-          }`
+          `https://guitarguitar.onrender.com/story/getAllStories?search=${encodeURIComponent(
+            searchKey
+          )}${
+            selectedCategory !== "All"
+              ? `&category=${encodeURIComponent(selectedCategory)}`
+              : ""
+          }&page=${page}`
         );
         setStories(data.data);
+        setPages(data.pages);
       } catch (error) {
         console.error(error);
       } finally {
@@ -36,99 +46,102 @@ export default function Shelter() {
     };
 
     fetchStories();
-  }, [searchKey, selectedCategory]);
+  }, [searchKey, selectedCategory, page]);
 
-  // Update URL when category changes
+  // Sync URL
   useEffect(() => {
-    const queryParts = [];
-    if (searchKey) queryParts.push(`search=${encodeURIComponent(searchKey)}`);
+    const parts = [];
+    if (searchKey) parts.push(`search=${encodeURIComponent(searchKey)}`);
     if (selectedCategory && selectedCategory !== "All")
-      queryParts.push(`category=${encodeURIComponent(selectedCategory)}`);
-
-    const queryString = queryParts.length ? `?${queryParts.join("&")}` : "";
-    navigate({ pathname: "/store", search: queryString }, { replace: true });
-  }, [searchKey, selectedCategory, navigate]);
+      parts.push(`category=${encodeURIComponent(selectedCategory)}`);
+    if (page > 1) parts.push(`page=${page}`);
+    const query = parts.length ? `?${parts.join("&")}` : "";
+    navigate({ pathname: "/store", search: query }, { replace: true });
+  }, [searchKey, selectedCategory, page, navigate]);
 
   const categories = useMemo(() => {
-    const cats = new Set();
-    stories.forEach(s => s.category && cats.add(s.category));
-    return ["All", ...Array.from(cats)];
+    const setCats = new Set();
+    stories.forEach((s) => s.category && setCats.add(s.category));
+    return ["All", ...Array.from(setCats)];
   }, [stories]);
 
   const filteredStories =
     selectedCategory === "All"
       ? stories
-      : stories.filter(s => s.category === selectedCategory);
+      : stories.filter((s) => s.category === selectedCategory);
 
   return (
-    <SectionWrapper>
+    <Section>
       {loading ? (
-        <div className="skeleton_emp">
+        <div className="skeleton-grid">
           {[...Array(6)].map(() => <SkeletonStory key={uuidv4()} />)}
         </div>
       ) : (
         <>
-          <FilterContainer>
-            <label htmlFor="categoryFilter">Filter by Category:</label>
+          <FilterBar>
+            <label htmlFor="categoryFilter">Category:</label>
             <select
               id="categoryFilter"
               value={selectedCategory}
-              onChange={e => setSelectedCategory(e.target.value)}
+              onChange={(e) => { setSelectedCategory(e.target.value); setPage(1); }}
             >
-              {categories.map(cat => (
+              {categories.map((cat) => (
                 <option key={cat} value={cat}>{cat}</option>
               ))}
             </select>
-          </FilterContainer>
+          </FilterBar>
 
-          <div className="story-card-wrapper">
+          <StoriesGrid>
             {filteredStories.length
-              ? filteredStories.map(story => (
+              ? filteredStories.map((story) => (
                   <CardStory key={uuidv4()} story={story} />
                 ))
               : <NoStories />
             }
-            <img className="bg-planet-svg" src="planet.svg" alt="planet" />
-            <img className="bg-planet2-svg" src="planet2.svg" alt="planet" />
-            <img className="bg-planet3-svg" src="planet3.svg" alt="planet" />
-          </div>
+          </StoriesGrid>
+
+          {pages > 1 && (
+            <PaginationWrapper>
+              <Pagination page={page} pages={pages} changePage={setPage} />
+            </PaginationWrapper>
+          )}
         </>
       )}
-    </SectionWrapper>
+    </Section>
   );
 }
 
-const SectionWrapper = styled.div`
+const Section = styled.div`
   padding: 1rem;
 `;
 
-const FilterContainer = styled.div`
+const FilterBar = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   margin: 1.5rem 0;
+  gap: 0.5rem;
 
   label {
-    font-size: 1rem;
     font-weight: 500;
-    color: #333;
-    margin-right: 0.75rem;
   }
-
   select {
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
     border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #fff;
-    appearance: none;
-    cursor: pointer;
-
-    &:hover { border-color: #999; }
-    &:focus {
-      outline: none;
-      border-color: #6666ff;
-      box-shadow: 0 0 0 2px rgba(102,102,255,0.2);
-    }
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
   }
 `;
+
+const StoriesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  align-items: start;
+`;
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+`;```
