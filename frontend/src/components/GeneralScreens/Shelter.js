@@ -10,7 +10,6 @@ import CardStory from "../StoryScreens/CardStory";
 import NoStories from "../StoryScreens/NoStories";
 import Pagination from "./Pagination";
 
-
 export default function Shelter() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -114,16 +113,18 @@ export default function Shelter() {
 
 const Section = styled.div`
   padding: 1rem;
+  background: #fafafa;
 `;
 
 const FilterBar = styled.div`
   display: flex;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   gap: 0.5rem;
 
   label {
     font-weight: 500;
+    color: #333;
   }
   select {
     padding: 0.4rem 0.6rem;
@@ -138,11 +139,35 @@ const StoriesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
-  align-items: start;
 `;
 
 const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2rem 0;
-`;```
+  margin: 1.5rem 0;
+
+  .pagination {
+    background: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .pagination button {
+    margin: 0 0.25rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    border: none;
+    background: #eee;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .pagination button:disabled {
+    background: transparent;
+    color: #aaa;
+    cursor: default;
+  }
+  .pagination button:hover:not(:disabled) {
+    background: #ddd;
+  }
+`;
+```
