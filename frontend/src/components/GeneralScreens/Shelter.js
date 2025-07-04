@@ -1,4 +1,3 @@
-```javascript
 // src/components/Shelter.js
 import React, { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -96,7 +95,9 @@ export default function Shelter() {
           <StoriesGrid>
             {filteredStories.length ? (
               filteredStories.map((story) => (
-                <CardStory key={uuidv4()} story={story} />
+                <CardWrapper key={uuidv4()}>
+                  <CardStory story={story} />
+                </CardWrapper>
               ))
             ) : (
               <NoStories />
@@ -140,25 +141,27 @@ const FilterBar = styled.div`
 
 const StoriesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 `;
 
 const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin: 1.5rem 0;
-
+  margin: 2rem 0 0 0;
+  width: 100%;
+  
   .pagination {
     background: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   }
   .pagination button {
     margin: 0 0.25rem;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
     border: none;
     background: #eee;
     border-radius: 4px;
@@ -172,4 +175,10 @@ const PaginationWrapper = styled.div`
   .pagination button:hover:not(:disabled) {
     background: #ddd;
   }
+`;
+
+const CardWrapper = styled.div`
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
 `;
