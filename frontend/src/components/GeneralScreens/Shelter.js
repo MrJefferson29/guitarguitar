@@ -10,6 +10,7 @@ import CardStory from "../StoryScreens/CardStory";
 import NoStories from "../StoryScreens/NoStories";
 import Pagination from "./Pagination";
 
+
 export default function Shelter() {
   const location = useLocation();
   const navigate = useNavigate();
