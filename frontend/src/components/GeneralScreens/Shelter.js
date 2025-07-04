@@ -74,7 +74,9 @@ export default function Shelter() {
     <Section>
       {loading ? (
         <div className="skeleton-grid">
-          {[...Array(6)].map(() => <SkeletonStory key={uuidv4()} />)}
+          {[...Array(6)].map(() => {
+            return <SkeletonStory key={uuidv4()} />;
+          })}
         </div>
       ) : (
         <>
@@ -92,12 +94,13 @@ export default function Shelter() {
           </FilterBar>
 
           <StoriesGrid>
-            {filteredStories.length
-              ? filteredStories.map((story) => (
-                  <CardStory key={uuidv4()} story={story} />
-                ))
-              : <NoStories />
-            }
+            {filteredStories.length ? (
+              filteredStories.map((story) => (
+                <CardStory key={uuidv4()} story={story} />
+              ))
+            ) : (
+              <NoStories />
+            )}
           </StoriesGrid>
 
           {pages > 1 && (
@@ -170,4 +173,3 @@ const PaginationWrapper = styled.div`
     background: #ddd;
   }
 `;
-```
