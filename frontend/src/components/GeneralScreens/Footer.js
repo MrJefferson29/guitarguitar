@@ -60,9 +60,62 @@ const Contact = styled.div`
 
   .icons {
     display: flex;
-    gap: 0.6rem;
+    gap: 1rem;
     margin: 1rem 0;
-    font-size: 1.2rem;
+    font-size: 2rem;
+    align-items: center;
+  }
+
+  .icons a, .icons svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 1.6em;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .icons a:hover[aria-label="Facebook"] {
+    background: #1877f2;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(24,119,242,0.15);
+  }
+  .icons a:hover[aria-label="Instagram"] {
+    background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(214,36,159,0.15);
+  }
+  .icons svg:hover {
+    background: #222;
+    color: #1da1f2;
+    box-shadow: 0 4px 16px rgba(29,161,242,0.10);
+  }
+  .icons svg[aria-label="Tiktok"]:hover {
+    background: #000;
+    color: #fff;
+  }
+  .icons svg[aria-label="Youtube"]:hover {
+    background: #ff0000;
+    color: #fff;
+  }
+
+  @media (max-width: 600px) {
+    .icons {
+      gap: 0.5rem;
+      font-size: 1.3rem;
+    }
+    .icons a, .icons svg {
+      width: 34px;
+      height: 34px;
+      font-size: 1.1em;
+    }
   }
 
   img {
@@ -90,7 +143,7 @@ const Footer = () => {
           <LinkList>
             {[
               "Contact us",
-              "Returns Policy",
+              "Retrieve Store Quote",
               "Finance FAQs",
               "Cookie Information",
               "Terms & Conditions",
@@ -118,7 +171,6 @@ const Footer = () => {
               "About Us",
               "News",
               "Education",
-              "Music Therapy Charity",
               "Our Privacy Policy",
             ].map((item) => (
               <LinkItem key={item}><a href="#">{item}</a></LinkItem>
@@ -132,11 +184,8 @@ const Footer = () => {
           <p>Mon - Sat 10am to 5:30pm</p>
           <p>Sun 11am to 5pm</p>
           <div className="icons">
-            <FaFacebookF />
-            <FaTwitter />
-            <FaInstagram />
-            <FaTiktok />
-            <FaYoutube />
+            <a href="https://www.facebook.com/share/1Au7EAZ5XR/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+            <a href="https://www.instagram.com/melodymart_?igsh=MXNiZ2oxY2RmdHoz&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
           </div>
         </Contact>
       </Container>
