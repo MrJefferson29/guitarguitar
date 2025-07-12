@@ -91,13 +91,9 @@ const Footer = () => {
             {[
               "Contact us",
               "Returns Policy",
-              "Track my Order",
-              "Retrieve Store Quote",
               "Finance FAQs",
               "Cookie Information",
               "Terms & Conditions",
-              "Klarna Information",
-              "Clearpay Information",
             ].map((text) => (
               <LinkItem key={text}><a href="#">{text}</a></LinkItem>
             ))}
@@ -120,13 +116,10 @@ const Footer = () => {
           <LinkList>
             {[
               "About Us",
-              "E-Gift Cards",
-              "Trade it. Sell it.",
               "News",
               "Education",
               "Music Therapy Charity",
               "Our Privacy Policy",
-              "Vacancies",
             ].map((item) => (
               <LinkItem key={item}><a href="#">{item}</a></LinkItem>
             ))}
