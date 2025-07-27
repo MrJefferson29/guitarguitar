@@ -72,11 +72,11 @@ export default function Shelter() {
   return (
     <Section>
       {loading ? (
-        <div className="skeleton-grid">
+        <SkeletonGrid>
           {[...Array(6)].map(() => {
             return <SkeletonStory key={uuidv4()} />;
           })}
-        </div>
+        </SkeletonGrid>
       ) : (
         <>
           <FilterBar>
@@ -105,9 +105,7 @@ export default function Shelter() {
           </StoriesGrid>
 
           {pages > 1 && (
-            <PaginationWrapper>
-              <Pagination page={page} pages={pages} changePage={setPage} />
-            </PaginationWrapper>
+            <Pagination page={page} pages={pages} changePage={setPage} />
           )}
         </>
       )}
@@ -118,67 +116,134 @@ export default function Shelter() {
 const Section = styled.div`
   padding: 1rem;
   background: #fafafa;
+  min-height: 100vh;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
 const FilterBar = styled.div`
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
-  gap: 0.5rem;
+  align-items: center;
+  margin: 1.5rem 0;
+  gap: 0.75rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
 
   label {
-    font-weight: 500;
+    font-weight: 600;
     color: #333;
+    font-size: 1rem;
   }
+  
   select {
-    padding: 0.4rem 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.95rem;
-    transition: border-color 0.2s;
+    padding: 0.6rem 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+    
+    &:hover {
+      border-color: #adb5bd;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    
+    label {
+      font-size: 0.9rem;
+    }
+    
+    select {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    label {
+      font-size: 0.85rem;
+    }
+    
+    select {
+      width: 100%;
+      max-width: 200px;
+    }
   }
 `;
 
 const StoriesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
-const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0 0 0;
-  width: 100%;
-  
-  .pagination {
-    background: #fff;
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  }
-  .pagination button {
-    margin: 0 0.25rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: none;
-    background: #eee;
-    border-radius: 4px;
-    transition: background 0.2s;
-  }
-  .pagination button:disabled {
-    background: transparent;
-    color: #aaa;
-    cursor: default;
-  }
-  .pagination button:hover:not(:disabled) {
-    background: #ddd;
-  }
-`;
+
 
 const CardWrapper = styled.div`
   width: 100%;
-  max-width: 340px;
+  max-width: 100%;
   margin: 0 auto;
+  
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
+`;
+
+const SkeletonGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
